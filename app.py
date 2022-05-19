@@ -7,12 +7,9 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 from datetime import datetime
 import base64
-import cv2
-import numpy as np
+
 from face_recognize import FaceRecognize
-import json
-import time
-from mark_attendance import Attendance
+
 app = Flask(__name__)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -39,6 +36,13 @@ app.config['SECRET_KEY'] = 'thisisasecretkey'
 # def load_user(user_id):
 #     return User.query.get(int(user_id))
 
+def markAttendance(names):
+    now = datetime.now()
+    dateString = now.strftime('%H:%M:%S')
+    for name in names:
+        new_user = User(username=name, date=dateString)
+        db.session.add(new_user)
+        db.session.commit()
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -64,7 +68,7 @@ class LoginForm(FlaskForm):
     username = StringField(validators=[
                            InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
 
-    submit = SubmitField('Login')
+    submit = SubmitField('Check Attendance')
 
 
 @app.route('/')
@@ -78,13 +82,17 @@ def check_attendance():
     form = LoginForm()
     if form.is_submitted():
         print("form submitted")
-        user = User.query.filter_by(username=form.username.data).first()
-        if user:
-            if user.date:
-                print(user.date)
-                return user.date
-        else:
-            return "user doesnt exist"
+        users = User.query.filter_by(username=form.username.data).all()
+        print(users)
+        marked_time_list = []
+        for user in users:
+            if user:
+                if user.date:
+                    print(user.date)
+                    marked_time_list.append(user.date)
+            else:
+                return "user doesnt exist"
+        return jsonify(marked_time_list)
     else:
         print("not submitted")
     return render_template('check_attendance.html', form=form)
@@ -106,34 +114,27 @@ def check_attendance():
 @ app.route('/mark_attendance', methods=['GET', 'POST'])
 def mark_attendance():
     form = RegisterForm()
-
     if form.validate_on_submit():
         # hashed_password = bcrypt.generate_password_hash(form.password.data)
-        now = datetime.now()
-        dateString = now.strftime('%H:%M:%S')
-        new_user = User(username=form.username.data, date=dateString)
-        db.session.add(new_user)
-        db.session.commit()
+        markAttendance([form.username.data])
         return redirect(url_for('check_attendance'))
-
     return render_template('mark_attendance.html', form=form)
 
-@app.route('/signup', methods=['GET','POST'])
-def signup():
+@app.route('/attendance', methods=['GET','POST'])
+def attendance():
     if request.method == 'POST':
-        print(request.form['file'])
         imgdata = base64.b64decode(request.form['file'].split(',')[1])
         filename = 'img.jpg'
         with open(filename,"wb") as f:
             f.write(imgdata)
-        faceRec.readJson()
+
         names = faceRec.findName("img.jpg")
+        markAttendance(names)
         print(names)
         # return jsonify(request.form['userID'], request.form['file'])
         return(jsonify(names))
-    return render_template('signup.html')
+    return render_template('attendance.html')
 
 if __name__ == "__main__":
     faceRec = FaceRecognize()
-    attendance = Attendance()
     app.run(debug=True, host="0.0.0.0", ssl_context="adhoc")

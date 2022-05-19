@@ -11,6 +11,7 @@ class FaceRecognize():
         self.encodedDataFile = open('encodedImages.json', 'r+')
         self.encodedImages = []
         self.names = []
+        self.readJson()
 
     def readJson(self):
         self.encodedDataFile.seek(0)
