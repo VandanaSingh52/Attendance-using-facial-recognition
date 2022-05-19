@@ -15,8 +15,8 @@ class FaceRecognize():
             self.readJson()
         except:
             print("could not read json, starting encoding")
-        finally:
             self.EncodeAll()
+
 
     def readJson(self):
         self.encodedDataFile.seek(0)
@@ -29,6 +29,7 @@ class FaceRecognize():
         encodedDataJson = {}
         for name, encodedImage in zip(self.names, self.encodedImages):
             encodedDataJson[name] = encodedImage.tolist()
+        self.encodedDataFile.seek(0)
         self.encodedDataFile.truncate(0)
         json.dump(encodedDataJson, self.encodedDataFile)
 

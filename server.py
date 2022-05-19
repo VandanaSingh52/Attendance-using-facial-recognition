@@ -5,6 +5,8 @@ from mark_attendance import Attendance
 
 faceRec = FaceRecognize()
 attendance = Attendance()
+faceRec.EncodeAll()
+faceRec.readJson()
 names = faceRec.findName("test_image/download.jpeg")
 print(names)
 attendance.markAttendance(names)
