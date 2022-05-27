@@ -135,7 +135,7 @@ def attendance():
         print(names)
         # return jsonify(request.form['userID'], request.form['file'])
         return(jsonify(names))
-    return render_template('attendance.html')
+    return render_template('facial_attendance.html')
 
 
 if __name__ == "__main__":
