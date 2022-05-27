@@ -98,7 +98,7 @@ notebook==6.4.11
 numpy==1.19.3
 oauthlib==3.1.0
 olefile==0.46
-opencv-python==4.4.0.46
+opencv-python-headless==4.4.0.46
 packaging==20.8
 pandas==1.1.5
 pandocfilters==1.5.0
