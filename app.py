@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = 'thisisasecretkey'
-
+faceRec = FaceRecognize()
 
 # def data_uri_to_cv2_img(uri):
 #     encoded_data = uri.split(',')[1]
@@ -26,16 +26,16 @@ app.config['SECRET_KEY'] = 'thisisasecretkey'
 # img = data_uri_to_cv2_img(data_uri)
 # cv2.imshow(img)
 
+'''
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
-# login_manager = LoginManager()
-# login_manager.init_app(app)
-# login_manager.login_view = 'login'
 
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.query.get(int(user_id))
-
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+'''
 def markAttendance(names):
     now = datetime.now()
     dateString = now.strftime('%H:%M:%S')
@@ -56,13 +56,15 @@ class RegisterForm(FlaskForm):
 
     submit = SubmitField('Register')
 
-    # def validate_username(self, username):
-    #     existing_user_username = User.query.filter_by(
-    #         username=username.data).first()
-    #     if existing_user_username:
-    #         raise ValidationError(
-    #             'That username already exists. Please choose a different one.')
 
+'''
+    def validate_username(self, username):
+        existing_user_username = User.query.filter_by(
+            username=username.data).first()
+        if existing_user_username:
+            raise ValidationError(
+                'That username already exists. Please choose a different one.')
+'''
 
 class LoginForm(FlaskForm):
     username = StringField(validators=[
@@ -97,20 +99,20 @@ def check_attendance():
         print("not submitted")
     return render_template('check_attendance.html', form=form)
 
-
-# @app.route('/dashboard', methods=['GET', 'POST'])
-# @login_required
-# def dashboard():
-#     return render_template('dashboard.html')
-#
-#
-# @app.route('/logout', methods=['GET', 'POST'])
-# @login_required
-# def logout():
-#     logout_user()
-#     return redirect(url_for('login'))
+''' 
+@app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
 
 
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+'''
 @ app.route('/mark_attendance', methods=['GET', 'POST'])
 def mark_attendance():
     form = RegisterForm()
@@ -135,6 +137,6 @@ def attendance():
         return(jsonify(names))
     return render_template('attendance.html')
 
+
 if __name__ == "__main__":
-    faceRec = FaceRecognize()
     app.run(debug=True, host="0.0.0.0", ssl_context="adhoc")

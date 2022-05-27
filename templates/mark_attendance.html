@@ -6,19 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance</title>
+    <style>
+        body{
+            background-color: #212529;
+            margin-top: 250px;
+        }
+        
+    </style>
 </head>
 
 <body>
-    <h1>Attendance Page</h1>
+    <h1 style="color: white; font-family:Arial; font-size: 45px" align="center">Mark attendance</h1>
 
-    <form method="POST" action="">
+    <form method="POST" action="" align="center">
         {{ form.hidden_tag() }}
         {{ form.username }}
         {{ form.password }}
         {{ form.submit }}
     </form>
 
-    <a href="{{ url_for('check_attendance') }}">Already have an account? Log In</a>
+    <p align="center" ><a href="{{ url_for('check_attendance') }}"> Already have an account? Log In</a></p>
 </body>
 
 </html>

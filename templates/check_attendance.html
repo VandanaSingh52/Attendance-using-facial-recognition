@@ -6,16 +6,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Attendance</title>
+    <style>
+        body{
+            background-color: #212529;
+            margin-top: 250px;
+        }
+        .textbox{
+            opacity:70%;
+            
+            
+
+        }
+    </style>
 </head>
 
-<body>
-    <h1>Check Attendance Page</h1>
+<body >
+    <div class="container"  >
+    <h1 style="color: white; font-family:Arial; font-size: 45px" align="center">Check Attendance </h1>
+    </div>
+    <br>
 
-    <form method="POST" action="">
+    <div class="textbox" >
+    <form method="POST" action="" align="center">
         {{ form.username }}
         {{ form.submit }}
     </form>
+    </div>
+
+
+  
 
 </body>
+
 
 </html>

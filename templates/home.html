@@ -5,15 +5,110 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    
     <title>Home</title>
+    <style>
+      body::before {
+    display: block;
+    content: '';
+    height: 60px;
+    }
+    </style>
+
+    
+
 </head>
 
 <body>
-    <h1>Login Authentication System in Flask.</h1>
-    <a href="{{ url_for('check_attendance') }}">Check Attendance Page</a><br>
-    <a href="{{ url_for('mark_attendance') }}">Mark attendance Page</a><br>
-    <a href="{{ url_for('attendance') }}">Mark facial attendance Page</a><br>
 
+        <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
+      <div class="container">
+        <a href="#" class="navbar-brand"><h1><span class="text-warning"> Attendance System </span></h1></a>
+      </div>
+    </nav>
+
+    <!-- Showcase -->
+    <section
+      class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start"
+    >
+      <div class="container">
+        <div class="d-sm-flex align-items-center justify-content-between">
+          <div>
+            <p class="lead my-4">
+              Face recognition based attendance system with live camera feature.
+            </p>
+          </div>
+          <img
+            class="img-fluid w-50 d-none d-sm-block "
+            src="https://i.pinimg.com/originals/75/67/60/7567600f78cdc560442d31b420d2c441.jpg"
+            alt=""
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Boxes -->
+    <section class="p-5">
+      <div class="container">
+        <div class="row text-center g-4">
+          <div class="col-md">
+            <div class="card bg-dark text-light">
+              <div class="card-body text-center">
+                <div class="h1 mb-3">
+                  <i class="bi bi-laptop"></i>
+                </div>
+                <h3 class="card-title mb-3">Mark facial attendance</h3>
+                
+                <a href="{{ url_for('attendance') }}" class="btn btn-primary">click here</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="card bg-secondary text-light">
+              <div class="card-body text-center">
+                <div class="h1 mb-3">
+                  <i class="bi bi-person-square"></i>
+                </div>
+                <h3 class="card-title mb-3">Mark attendance</h3>
+                
+                <a href="{{ url_for('mark_attendance') }}" class="btn btn-primary">click here</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="card bg-dark text-light">
+              <div class="card-body text-center">
+                <div class="h1 mb-3">
+                  <i class="bi bi-people"></i>
+                </div>
+                <h3 class="card-title mb-3">Check attendance</h3>
+                
+                <a href="{{ url_for('check_attendance') }}" class="btn btn-primary">click here</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
 </body>
 
 </html>
